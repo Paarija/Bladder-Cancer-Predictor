@@ -19,34 +19,34 @@ Bladder cancer is a common malignancy, and traditional diagnostic methods often 
 The project followed a clear methodology:
 
 
--Data Preprocessing: Gene expression datasets from 408 tumor and 19 normal bladder samples were obtained. These were merged and labeled, with cancer samples as '1' and normal samples as '0'. Missing values were handled using K-Nearest Neighbors (KNN) imputation, and the dataset was balanced using SMOTE.
+- Data Preprocessing: Gene expression datasets from 408 tumor and 19 normal bladder samples were obtained. These were merged and labeled, with cancer samples as '1' and normal samples as '0'. Missing values were handled using K-Nearest Neighbors (KNN) imputation, and the dataset was balanced using SMOTE.
 
 
 
 
 
 
--Feature Engineering: A correlation-based filtering approach was applied to reduce multicollinearity, removing 20 features with a correlation greater than 0.8.
+- Feature Engineering: A correlation-based filtering approach was applied to reduce multicollinearity, removing 20 features with a correlation greater than 0.8.
 
 
 
 
--Model Training: Four classification algorithms—Random Forest, Support Vector Machine (SVM), Logistic Regression, and XGBoost—were trained and evaluated.
+- Model Training: Four classification algorithms—Random Forest, Support Vector Machine (SVM), Logistic Regression, and XGBoost—were trained and evaluated.
 
 
 
--Cancer Predictor Tool: SHAP (SHapley Additive exPlanations) values were used to interpret the model's decisions and identify the most influential genes.
+- Cancer Predictor Tool: SHAP (SHapley Additive exPlanations) values were used to interpret the model's decisions and identify the most influential genes.
 
 
 
 
 
 
--Deployment: The best-performing model was deployed via a Streamlit-based web interface for practical usability.
+- Deployment: The best-performing model was deployed via a Streamlit-based web interface for practical usability.
 
 
 ### Results
--Model Performance
+- Model Performance
 The models were evaluated on key metrics, including accuracy, precision, recall, and ROC-AUC.
 
 
@@ -66,7 +66,7 @@ Both Random Forest and XGBoost demonstrated excellent performance, with ROC-AUC 
 
 
 
--Key Biomarkers
+- Key Biomarkers
 Feature importance analysis using XGBoost identified the top 15 genes that were most influential in the model's predictions. The top five were:
 
 PARK2
