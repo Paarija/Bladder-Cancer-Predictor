@@ -1,5 +1,5 @@
-# Bladder Cancer Diagnostic Framework 
-> using Autophagy-Related Genes
+# 🧬 Bladder Cancer Diagnostic Framework 
+> using Autophagy-Related Genes 
 ____
 ### Project Overview
 This project proposes a machine learning-based framework for bladder cancer diagnosis using gene expression data of autophagy-related genes (ARGs). The framework integrates data preprocessing, feature selection, and explainable AI to build predictive models and offers a user-friendly interface for real-time predictions.
