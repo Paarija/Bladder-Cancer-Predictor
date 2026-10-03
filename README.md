@@ -13,7 +13,7 @@ Autophagy is the cell's internal recycling system. Under normal conditions, cell
 
 Diagnosing these changes early is difficult. Finding the subtle genetic signatures of this cellular hijack among thousands of active genes is like looking for a needle in a haystack. 
 
-This project provides an end-to-end clinical machine learning pipeline and interactive dashboard. It acts as a genomic detective, isolating the top **Autophagy-Related Genes (ARGs)** to predict bladder cancer risk and explain the biological decisions behind those predictions in real-time.
+This project provides an end-to-end research machine-learning pipeline and interactive dashboard. It isolates the top **Autophagy-Related Genes (ARGs)** to estimate bladder-cancer risk and explain model behavior. It is not a diagnostic device and should not be used as a substitute for clinical evaluation.
 
 ---
 
@@ -35,11 +35,9 @@ This workflow is engineered to solve clinical-grade data challenges with rigorou
 ## System Pipeline Architecture
 ```mermaid
 flowchart TD
-    A[Tumor Samples Excel] & B[Normal Samples Excel] --> C(preprocess.py <br/>Merge & Transpose)
-    C --> D[KNN Imputer <br/>Impute Missing Gene Values]
-    D --> E[Shuffled Preprocessed Data <br/>preprocessed_data.xlsx]
+    A[Preprocessed gene matrix] --> E[preprocessed_data.xlsx]
     
-    E --> F[train.py <br/>Stratified Holdout Split]
+    E --> F[model training and evaluation.py <br/>Stratified Holdout Split]
     F --> G[Training Pool]
     F --> H[Isolated Holdout Test Set]
     
@@ -52,11 +50,11 @@ flowchart TD
     
     L --> M[Hyperparameter Tuning & Training <br/>SVM, Lasso, RF, XGBoost, MLP]
     
-    H & M --> O(visualize_metrics.py <br/>Compare Models on Holdout Set)
-    O --> P[Generate Performance Plots <br/>roc_curves_comparison.png, metrics_comparison_bar.png]
-    O --> N[Save Best Model & Scalers <br/>scaler.pkl, feature_names.pkl, best_model.pkl]
+    H & M --> O[Evaluate models on holdout set]
+    O --> P[Generate metrics plots]
+    O --> N[Save model_bundle.pkl with selector, scaler and model]
     
-    N --> Q(app.py <br/>Streamlit Diagnostic App)
+    N --> Q(cancer_dashboard.py <br/>Streamlit Research Dashboard)
     Q --> R[User Uploads CSV]
     R --> S[Clinical Prediction & Risk Bands]
     S --> T[Patient-Level SHAP Waterfall Explanations]
@@ -114,32 +112,18 @@ The interactive web portal brings the pipeline to life for clinicians:
 
 ## Step-by-Step Running Guide
 
-### Step 1: Preprocess the Genomic Matrices
-Align datasets, transpose patients to rows, and impute missing genes.
+### Step 1: Run the Training Pipeline
+Train the classifiers, evaluate an isolated holdout set, and export a self-contained bundle containing feature selection, scaling, and the XGBoost model.
 ```bash
-python preprocess.py
+python "model training and evaluation.py"
 ```
-*Generated output:* `preprocessed_data.xlsx`
+*Generated outputs:* `model_bundle.pkl`, `feature_names.pkl`, `scaler.pkl`, `best_model.pkl`, `XGBoost_best_model.pkl`, `model_metadata.json`, `holdout_test_patients.csv`, `holdout_test_labels.csv`, and comparison plots.
 
-### Step 2: Run the Training & CV Pipeline
-Execute nested cross-validation, feature selection, scaling, class balancing, and model training.
+### Step 2: Launch the Streamlit Interactive Portal
 ```bash
-python train.py
+streamlit run cancer_dashboard.py
 ```
-*Generated outputs:* `feature_names.pkl`, `scaler.pkl`, `best_model.pkl`, `XGBoost_best_model.pkl`, `model_metadata.json`, `holdout_test_patients.csv`, and `holdout_test_labels.csv`.
-
-### Step 3: Compare Models & Save Comparison Charts
-Evaluate models on the holdout test set under optimized decision thresholds and output performance charts.
-```bash
-python visualize_metrics.py
-```
-*Generated outputs:* `roc_curves_comparison.png` and `metrics_comparison_bar.png`
-
-### Step 4: Launch the Streamlit Interactive Portal
-```bash
-streamlit run app.py
-```
-Upload the generated `holdout_test_patients.csv` (or any patient gene expression profile CSV) to test predictions and review patient SHAP waterfalls.
+Upload `holdout_test_patients.csv` (or another CSV containing all training gene columns) to review predictions and SHAP explanations.
 
 ---
 

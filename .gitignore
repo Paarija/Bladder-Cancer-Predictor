@@ -1,0 +1,16 @@
+# Generated training artifacts
+*.pkl
+model_metadata.json
+holdout_test_*.csv
+*_comparison.png
+
+# Python cache and local tooling
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Streamlit and notebook leftovers
+.streamlit/secrets.toml
+.ipynb_checkpoints/
