@@ -2,7 +2,7 @@
 *.pkl
 model_metadata.json
 holdout_test_*.csv
-*_comparison.png
+*comparison*.png
 
 # Python cache and local tooling
 __pycache__/
